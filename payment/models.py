@@ -1,27 +1,43 @@
+from enum import Enum
+
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 from borrowing.models import Borrowing
 
 
-class Payment(models.Model):
-    class Status(models.TextChoices):
-        PENDING = "PENDING", _("Pending")
-        PAID = "PAID", _("Paid")
+class PaymentType(Enum):
 
-    class Type(models.TextChoices):
-        PAYMENT = "PAYMENT", _("Payment")
-        FINE = "FINE", _("Fine")
+    PAYMENT = "PAYMENT",
+    FINE = "FINE"
+
+    @classmethod
+    def choices(cls):
+        print(tuple((i.name, i.value) for i in cls))
+        return tuple((i.name, i.value) for i in cls)
+
+
+class PaymentStatus(Enum):
+
+    PENDING = "PENDING",
+    PAID = "PAID"
+
+    @classmethod
+    def choices(cls):
+        print(tuple((i.name, i.value) for i in cls))
+        return tuple((i.name, i.value) for i in cls)
+
+
+class Payment(models.Model):
 
     status = models.CharField(
-        max_length=7,
-        choices=Status.choices,
-        default=Status.PENDING
+        max_length=63,
+        choices=PaymentStatus.choices(),
+        default=PaymentStatus.PENDING
     )
-    type =  models.CharField(
-        max_length=7,
-        choices=Type.choices,
-        default=Type.PAYMENT
+    type = models.CharField(
+        max_length=63,
+        choices=PaymentType.choices(),
+        default=PaymentType.PAYMENT
     )
     borrowing_id = models.ForeignKey(Borrowing, on_delete=models.SET_NULL)
     session_url = models.URLField(max_length=255)
