@@ -155,4 +155,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(seconds=36000),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZE",
 }
+
+
