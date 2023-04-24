@@ -7,7 +7,7 @@ from borrowing.models import Borrowing
 
 class PaymentType(Enum):
 
-    PAYMENT = "PAYMENT",
+    PAYMENT = "PAYMENT"
     FINE = "FINE"
 
     @classmethod
@@ -18,7 +18,7 @@ class PaymentType(Enum):
 
 class PaymentStatus(Enum):
 
-    PENDING = "PENDING",
+    PENDING = "PENDING"
     PAID = "PAID"
 
     @classmethod
@@ -39,9 +39,7 @@ class Payment(models.Model):
         choices=PaymentType.choices(),
         default=PaymentType.PAYMENT
     )
-    borrowing_id = models.ForeignKey(Borrowing, on_delete=models.SET_NULL)
+    borrowing_id = models.ForeignKey(Borrowing, on_delete=models.SET_NULL, null=True)
     session_url = models.URLField(max_length=255)
     session_id = models.CharField(max_length=63)
     money_to_pay = models.DecimalField(max_digits=5, decimal_places=2)
-
-

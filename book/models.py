@@ -5,7 +5,7 @@ from django.db import models
 
 class BookCover(Enum):
 
-    SOFT = "SOFT",
+    SOFT = "SOFT"
     HARD = "HARD"
 
     @classmethod
