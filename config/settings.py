@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "book",
     "borrowing",
     "user",
     "payment",
     "drf_spectacular",
-    "rest_framework",
     "rest_framework_simplejwt"
 ]
 
