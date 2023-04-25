@@ -1,6 +1,4 @@
 from datetime import datetime
-
-from .tasks import get_borrowings_overdue
 from .telegram_bot import bot_borrowing_message
 import asyncio
 

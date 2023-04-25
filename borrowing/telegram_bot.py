@@ -18,7 +18,8 @@ async def bot_notification(message):
 
     if response.status_code == 200:
         print(
-            f"Borrowing creating successfully sended to channel  --> {MY_CHANNEL_NAME}  <-- "
+            f"Borrowing creating successfully sended to channel"
+            f"  --> {MY_CHANNEL_NAME}  <-- "
         )
     else:
         print(response.text)
@@ -49,7 +50,8 @@ async def bot_borrowing_message(
 
     if response.status_code == 200:
         print(
-            f"Borrowing data successfully sended to channel  --> {MY_CHANNEL_NAME}  <-- "
+            f"Borrowing data successfully sended to channel"
+            f"  --> {MY_CHANNEL_NAME}  <-- "
         )
     else:
         print(response.text)

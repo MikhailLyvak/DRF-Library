@@ -20,13 +20,4 @@ def get_borrowings_overdue():
             "user": get_user_model().objects.get(pk=borrowing["user_id"]).email,
             "book": Book.objects.get(pk=borrowing["book_id"]).title,
         }
-        # print(borrowing_data)
         asyncio.run(bot_notification(borrowing_data))
-
-
-# Schedule.objects.create(
-#     func="scheduled_func",
-#     kwargs={"num": 2, "string": "mala"},
-#     schedule_type=Schedule.MINUTES,
-#     minutes=1,
-# )
