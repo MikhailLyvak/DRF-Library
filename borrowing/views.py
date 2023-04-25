@@ -100,7 +100,7 @@ def return_borrowing(request, pk=None):
             data="Such a borrowing doesn't exists. Check the url please",
             status=status.HTTP_400_BAD_REQUEST,
         )
-    if borrowing.user != current_user.id:
+    if borrowing.user.id != current_user.id:
         return Response(
             data="It's not your borrowing, you cannot return it",
             status=status.HTTP_403_FORBIDDEN,
@@ -111,8 +111,9 @@ def return_borrowing(request, pk=None):
             status=status.HTTP_403_FORBIDDEN,
         )
     today = datetime.today()
-    book = Book.objects.get(book__id=borrowing.book)
+    book = Book.objects.get(pk=borrowing.book.id)
     book.inventory += 1
     borrowing.actual_return_date = today
     book.save()
+    borrowing.save()
     return Response(data="Borrowing returned successful", status=status.HTTP_200_OK)
