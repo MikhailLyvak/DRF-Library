@@ -9,3 +9,4 @@ class Borrowing(models.Model):
     actual_return_date = models.DateField(null=True, blank=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
