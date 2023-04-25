@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "user",
     "payment",
     "drf_spectacular",
-    "rest_framework",
     "rest_framework_simplejwt"
 ]
 
