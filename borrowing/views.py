@@ -69,7 +69,7 @@ class BorrowingViewSet(
 
         borrowing_date = serializer.data.get("borrow_date")
         borrowing_return = serializer.data.get("expected_return_date")
-        
+
         asyncio.run(bot_borrowing_message(book_info, user_data, borrowing_date, borrowing_return))
 
         return Response(
