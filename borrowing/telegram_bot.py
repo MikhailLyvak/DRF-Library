@@ -3,7 +3,6 @@ import requests
 BOT_API_KEY = "5902646689:AAFTBbITdTUjrqXCZuwhGcR1o893ybFttSc"
 MY_CHANNEL_NAME = "@echo_library"
 
-
 async def bot_notification(message):
     response = requests.get(
         f"https://api.telegram.org/bot{BOT_API_KEY}/sendMessage",
@@ -21,7 +20,6 @@ async def bot_notification(message):
             f"Borrowing creating successfully sended to channel  --> {MY_CHANNEL_NAME}  <-- ")
     else:
         print(response.text)
-
 
 async def bot_borrowing_message(
     book_info: tuple,
