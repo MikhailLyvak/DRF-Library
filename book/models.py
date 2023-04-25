@@ -15,7 +15,6 @@ class BookCover(Enum):
 
 
 class Book(models.Model):
-
     title = models.CharField(max_length=63)
     author = models.CharField(max_length=255)
     cover = models.CharField(
@@ -26,3 +25,6 @@ class Book(models.Model):
     )
     inventory = models.PositiveIntegerField()
     daily_fee = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return self.title
