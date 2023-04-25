@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     "user",
     "payment",
     "drf_spectacular",
-    "rest_framework_simplejwt"
+    "rest_framework_simplejwt",
+    "django_q",
 ]
 
 MIDDLEWARE = [
@@ -101,16 +102,13 @@ AUTH_PASSWORD_VALIDATORS = [
         "UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation."
-        "MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation." "MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation."
-        "CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation." "CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation."
-        "NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation." "NumericPasswordValidator",
     },
 ]
 
@@ -144,10 +142,7 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "100/min",
-        "user": "300/min"
-    },
+    "DEFAULT_THROTTLE_RATES": {"anon": "100/min", "user": "300/min"},
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
@@ -159,6 +154,14 @@ SIMPLE_JWT = {
 }
 
 
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
+Q_CLUSTER = {
+    "orm": "default",
+    "timeout": 30,
+    "retry": 60,
+    "workers": 2,
+    "ack_failures": True,
+    "attempt_count": 1,
+}
