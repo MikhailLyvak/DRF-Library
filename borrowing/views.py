@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from .telegram_bot import bot_borrowing_message
+import asyncio
+
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
 from datetime import date, timedelta
@@ -13,7 +16,7 @@ from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveMode
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
 
-from .models import Borrowing
+from .models import Borrowing, User
 from .permissions import IsBorrower
 from .serializers import (
     BorrowingSerializer,
@@ -53,6 +56,21 @@ class BorrowingViewSet(
         borrowing.save()
 
         serializer = self.get_serializer(borrowing)
+
+        book_info = Book.objects.values_list(
+            "title",
+            "daily_fee",
+            "author"
+        ).get(pk=serializer.data.get("book"))
+
+        user_data = User.objects.values_list(
+            "email", "username"    
+        ).get(pk=serializer.data.get("user"))
+
+        borrowing_date = serializer.data.get("borrow_date")
+        borrowing_return = serializer.data.get("expected_return_date")
+        
+        asyncio.run(bot_borrowing_message(book_info, user_data, borrowing_date, borrowing_return))
 
         return Response(
             serializer.data,
