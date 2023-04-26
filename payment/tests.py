@@ -89,3 +89,17 @@ class PaymentViewSetTestCase(APITestCase):
             response.data,
             "Payment canceled. You can pay later within 24 hours.",
         )
+
+    def test_fine_amount(self):
+
+        FINE_MULTIPLIER = 2
+
+        expected_return_date = datetime.now() - timedelta(days=7)
+        actual_return_date = datetime.now()
+        self.borrowing.actual_return_date = actual_return_date
+
+        days_overdue = (actual_return_date - expected_return_date).days
+        fine_amount = days_overdue * self.borrowing.book.daily_fee * FINE_MULTIPLIER
+        expected_fine_amount = 7 * self.borrowing.book.daily_fee * FINE_MULTIPLIER
+
+        self.assertEqual(fine_amount, expected_fine_amount)
