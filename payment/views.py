@@ -12,6 +12,7 @@ from payment.serializers import PaymentSerializer
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
+    """Return all the payments if user is admin and user's payments if not"""
     serializer_class = PaymentSerializer
     permission_classes = [PaymentPermission]
 
