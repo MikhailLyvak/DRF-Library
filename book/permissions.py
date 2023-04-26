@@ -2,6 +2,9 @@ from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
 class IsAdminOrReadOnly(BasePermission):
+    """
+    Custom permission to only users see only list of books.
+    """
     def has_permission(self, request, view):
         return bool(
             (

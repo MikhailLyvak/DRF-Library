@@ -164,4 +164,3 @@ Q_CLUSTER = {
     "ack_failures": True,
     "attempt_count": 1,
 }
-STRIPE_SECRET_KEY="sk_test_51N0OMdLVhrgvo0Lj9XHxRUfZGiC7LIDFhw0QS7m14xyWGJM2KHVuB1RE4OP5jMzwEcBU1EufEvJXopmwzKd0DCRS00ss5y7gKd"
