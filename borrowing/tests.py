@@ -83,7 +83,6 @@ class CreateBorrowingApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-        # Create test data, such as books and users
         self.book = Book.objects.create(
             title="test_title",
             author="test_author",
