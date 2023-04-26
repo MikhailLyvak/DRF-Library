@@ -1,10 +1,12 @@
 # DRF-Library-Group-Project
 
-Cinema service made with DFR for management.
+There is a library, where you can borrow books and pay for your borrowings using cash, depending on the days you read the book.
+There is the system with possibility of tracking books, borrowings, users & payments in the library is outdated.
+
 
 ## 💼 Installing using GIT
 ```
-git clone https://github.com/MikhailLyvak/Cinema-DRF-api.git
+git clone https://github.com/MikhailLyvak/DRF-Library.git
 cd DRF-LIBRARY
 python -m venv venv
 venv\Scripts\activate (on Windows)
@@ -17,16 +19,16 @@ pip install -r requirements.txt
  1. Ensure than you have installed django-q from requirements
  2. Make migrations: python manage.py migrate
  3. It’s recommended to add task via admin site (localhost + /admin/django_q/schedule/add/). 
-     Func = borrowing.tasks.get_borrowings_overdue
-     Otherwise, you can create it via Django shell:
-     Schedule.objects.create(
-          func="borrowing.tasks.get_borrowings_overdue"
-          schedule_type=Schedule.MINUTES,
-          minutes=1
+    Func = borrowing.tasks.get_borrowings_overdue
+    Otherwise, you can create it via Django shell:
+    Schedule.objects.create(
+       func="borrowing.tasks.get_borrowings_overdue"
+       schedule_type=Schedule.MINUTES,
+       minutes=1
      )
  4. Run the scheduler:
-python manage.py runserver
-python manage.py qcluster
+    python manage.py runserver
+    python manage.py qcluster
 ```
 
 
@@ -52,9 +54,15 @@ get access token via /api/users/token/
 - Managing books:
     - ( for admin only )
     - ( user can only see a list of books )
-- Managing borrowings:
+- Borrowings:
     - ( user can borrow book for 1 week )
-    - (  )
-- Creating cinema halls
-- Adding movie sessions
-- Filtering movies and movie sessions
+    - ( user can`t borrow book if it out of stock )
+- Notifications:
+    - ( when book borrowed, telegram bot send notification )
+    - ( telegram bot send notifications with info about overdue books )
+- Payments:
+    - ( users allowed to make payments for borrowed books and fines )
+    - ( users can create payments for their borrowed books or fines, and the payment service automatically generates payment session with a unique URL and ID )
+    - ( users are then redirected to the payment session URL to complete the payment process )
+    - ( also included, handling payment success and cancel callbacks from Stripe )
+- Filtering borrowings by active borrowings (still not returned)
