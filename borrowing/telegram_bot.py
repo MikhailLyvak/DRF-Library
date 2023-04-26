@@ -1,6 +1,9 @@
+import os
+from dotenv import load_dotenv
 import requests
 
-BOT_API_KEY = "5902646689:AAFTBbITdTUjrqXCZuwhGcR1o893ybFttSc"
+load_dotenv()
+BOT_API_KEY = os.getenv("BOT_API_KEY")
 MY_CHANNEL_NAME = "@echo_library"
 
 
