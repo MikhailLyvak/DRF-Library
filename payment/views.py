@@ -43,6 +43,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
             request.build_absolute_uri(reverse("payment:payment-success"))
             + f"?session_id={{CHECKOUT_SESSION_ID}}"
         )
+
         cancel_url = request.build_absolute_uri(
             reverse("payment:payment-cancel")
         )

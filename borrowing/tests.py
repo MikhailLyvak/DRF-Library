@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -77,3 +77,55 @@ class ReturnBookApiTests(TestCase):
         self.client.force_authenticate(another_user)
         res = self.client.post(self.return_borrowing_url)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class CreateBorrowingApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+        # Create test data, such as books and users
+        self.book = Book.objects.create(
+            title="test_title",
+            author="test_author",
+            cover="SOFT",
+            inventory=1,
+            daily_fee=1,
+        )
+        self.user = get_user_model().objects.create_user(
+            email="test@test.com",
+            password="test_password",
+        )
+        self.create_borrowing_url = reverse("borrowing:borrowing-list")
+
+    def test_create_borrowing_inventory_decreased(self):
+        self.client.force_authenticate(self.user)
+        borrowing_data = {"user": self.user.id, "book": self.book.id}
+        res = self.client.post(self.create_borrowing_url, data=borrowing_data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.book.refresh_from_db()
+        self.assertEqual(self.book.inventory, 0)
+
+    def test_create_borrowing_serializer_validated(self):
+        self.client.force_authenticate(self.user)
+        borrowing_data = {"user": self.user.id, "book": self.book.id}
+        self.book.inventory = 0
+        self.book.save()
+        res = self.client.post(self.create_borrowing_url, data=borrowing_data)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_borrowing_user_attached(self):
+        self.client.force_authenticate(self.user)
+        borrowing_data = {"user": self.user.id, "book": self.book.id}
+        res = self.client.post(self.create_borrowing_url, data=borrowing_data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        borrowing = Borrowing.objects.get(id=res.data["id"])
+        self.assertEqual(borrowing.user, self.user)
+
+    def test_create_borrowing_expected_return_date_set(self):
+        self.client.force_authenticate(self.user)
+        borrowing_data = {"user": self.user.id, "book": self.book.id}
+        res = self.client.post(self.create_borrowing_url, data=borrowing_data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        borrowing = Borrowing.objects.get(id=res.data["id"])
+        expected_return_date = date.today() + timedelta(days=7)
+        self.assertEqual(borrowing.expected_return_date, expected_return_date)
