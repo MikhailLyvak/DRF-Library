@@ -11,14 +11,17 @@ from payment.permissions import PaymentPermission
 from payment.serializers import PaymentSerializer
 CONST_PAYMENT_FEE_DAYS = 7
 
+
 class PaymentViewSet(viewsets.ModelViewSet):
     serializer_class = PaymentSerializer
     permission_classes = [IsAuthenticated, PaymentPermission]
+
     def get_queryset(self):
         queryset = Payment.objects.all()
         if self.request.user.is_staff:
             return queryset
         return Payment.objects.filter(borrowing_id__user=self.request.user.id)
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(
             data=request.data, context={"request": request}
