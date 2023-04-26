@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django.db.models import QuerySet
 from rest_framework import status
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
@@ -109,9 +110,31 @@ class BorrowingViewSet(
 
         return BorrowingSerializer
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "user_id",
+                type=str,
+                description="Retrieve borrowings owned by specific user. "
+                "Url format: ?user_id=1",
+                required=False,
+            ),
+            OpenApiParameter(
+                "genres ids contains",
+                type=str,
+                description="Retrieve borrowings depending on it's active or not. "
+                "Url format: url + ?is_active=true, ?is_active=false,",
+                required=False,
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 @api_view(["POST"])
 def return_borrowing(request, pk=None):
+    """Mark specific borrowing as non-active and sets actual return date as today"""
     current_user = request.user
     try:
         borrowing = Borrowing.objects.get(pk=pk)

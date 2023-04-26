@@ -20,6 +20,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
+    """Return all the payments if user is admin and user's payments if not"""
     serializer_class = PaymentSerializer
     permission_classes = [IsAuthenticated, PaymentPermission]
 
