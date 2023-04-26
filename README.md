@@ -65,4 +65,4 @@ get access token via /api/users/token/
     - ( users can create payments for their borrowed books or fines, and the payment service automatically generates payment session with a unique URL and ID )
     - ( users are then redirected to the payment session URL to complete the payment process )
     - ( also included, handling payment success and cancel callbacks from Stripe )
-- Filtering movies and movie sessions
+- Filtering borrowings by active borrowings (still not returned)
