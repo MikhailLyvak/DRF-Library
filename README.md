@@ -17,16 +17,16 @@ pip install -r requirements.txt
  1. Ensure than you have installed django-q from requirements
  2. Make migrations: python manage.py migrate
  3. It’s recommended to add task via admin site (localhost + /admin/django_q/schedule/add/). 
-     Func = borrowing.tasks.get_borrowings_overdue
-     Otherwise, you can create it via Django shell:
-     Schedule.objects.create(
-          func="borrowing.tasks.get_borrowings_overdue"
-          schedule_type=Schedule.MINUTES,
-          minutes=1
+    Func = borrowing.tasks.get_borrowings_overdue
+    Otherwise, you can create it via Django shell:
+    Schedule.objects.create(
+       func="borrowing.tasks.get_borrowings_overdue"
+       schedule_type=Schedule.MINUTES,
+       minutes=1
      )
  4. Run the scheduler:
-python manage.py runserver
-python manage.py qcluster
+    python manage.py runserver
+    python manage.py qcluster
 ```
 
 
@@ -52,9 +52,13 @@ get access token via /api/users/token/
 - Managing books:
     - ( for admin only )
     - ( user can only see a list of books )
-- Managing borrowings:
+- Borrowings:
     - ( user can borrow book for 1 week )
+    - ( user can`t borrow book if it out of stock )
+- Notifications:
+    - ( when book borrowed, telegram bot send notification )
+    - ( telegram bot send notifications with info about overdue books )
+- Payments:
     - (  )
-- Creating cinema halls
-- Adding movie sessions
+    - (  )
 - Filtering movies and movie sessions
