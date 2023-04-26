@@ -1,17 +1,15 @@
-from datetime import datetime
-
-from drf_spectacular.utils import extend_schema, OpenApiParameter
-
-from .telegram_bot import bot_borrowing_message
 import asyncio
 
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.decorators import api_view
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
+from .telegram_bot import bot_borrowing_message
 from typing import Type
+
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.db.models import QuerySet
 from rest_framework import status
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
@@ -59,7 +57,9 @@ class BorrowingViewSet(
 
         serializer = self.get_serializer(borrowing)
 
-        book_info = Book.objects.values_list("title", "daily_fee", "author").get(
+        book_info = Book.objects.values_list(
+            "title", "daily_fee", "author"
+        ).get(
             pk=serializer.data.get("book")
         )
 

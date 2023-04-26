@@ -1,8 +1,8 @@
 from rest_framework import mixins
+from rest_framework import viewsets
 
 from book.models import Book
 
-from rest_framework import viewsets
 from book.serializers import (
     BookSerializer,
     BookListSerializer,
@@ -16,6 +16,8 @@ class BookViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
     queryset = Book.objects.all()
