@@ -1,6 +1,8 @@
 # DRF-Library-Group-Project
 
-Cinema service made with DFR for management.
+There is a library, where you can borrow books and pay for your borrowings using cash, depending on the days you read the book.
+There is the system with possibility of tracking books, borrowings, users & payments in the library is outdated.
+
 
 ## 💼 Installing using GIT
 ```
