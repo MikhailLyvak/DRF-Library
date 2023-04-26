@@ -4,7 +4,7 @@ Cinema service made with DFR for management.
 
 ## 💼 Installing using GIT
 ```
-git clone https://github.com/MikhailLyvak/Cinema-DRF-api.git
+git clone https://github.com/MikhailLyvak/DRF-Library.git
 cd DRF-LIBRARY
 python -m venv venv
 venv\Scripts\activate (on Windows)
