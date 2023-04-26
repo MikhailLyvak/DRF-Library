@@ -18,4 +18,5 @@ class PaymentSerializer(serializers.ModelSerializer):
                             "status",
                             "type",
                             "session_url",
-                            "session_id",]
+                            "session_id",
+                            "money_to_pay"]
