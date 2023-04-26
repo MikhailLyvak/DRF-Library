@@ -61,6 +61,8 @@ get access token via /api/users/token/
     - ( when book borrowed, telegram bot send notification )
     - ( telegram bot send notifications with info about overdue books )
 - Payments:
-    - (  )
-    - (  )
+    - ( users allowed to make payments for borrowed books and fines )
+    - ( users can create payments for their borrowed books or fines, and the payment service automatically generates payment session with a unique URL and ID )
+    - ( users are then redirected to the payment session URL to complete the payment process )
+    - ( also included, handling payment success and cancel callbacks from Stripe )
 - Filtering movies and movie sessions
